@@ -11,15 +11,21 @@ class Action
 {
     protected $id;
     protected $destinationSceneId;
+    protected $title = null;
+    protected $parameters = [];
 
     /**
      * Construct a new action with the specified Scene as its destination.
      * @param int $destinationSceneId
+     * @param string|null $title
+     * @param array $parameters
      */
-    public function __construct(int $destinationSceneId)
+    public function __construct(int $destinationSceneId, ?string $title = null, array $parameters = [])
     {
         $this->id = bin2hex(random_bytes(8));
         $this->destinationSceneId = $destinationSceneId;
+        $this->title = $title;
+        $this->parameters = $parameters;
     }
 
     /**
@@ -35,10 +41,44 @@ class Action
     /**
      * Return the database ID of the destination scene, where the user will
      * go if they take this action.
-     * @return string
+     * @return int
      */
     public function getDestinationSceneId(): int
     {
         return $this->destinationSceneId;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getTitle(): ?string
+    {
+        return $this->title;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function setTitle(?string $title)
+    {
+        $this->title = $title;
+    }
+
+    /**
+     * Returns all parameters for this action
+     * @return array
+     */
+    public function getParameters(): array
+    {
+        return $this->parameters;
+    }
+
+    /**
+     * Sets all parameters for this action
+     * @param array $parameters
+     */
+    public function setParameters(array $parameters): void
+    {
+        $this->parameters = $parameters;
     }
 }
